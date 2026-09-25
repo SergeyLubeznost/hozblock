@@ -1,1 +1,101 @@
+/* 1. Подключаем базовые стили Bootstrap */
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+/* 2. Глобальный сброс отступов и настройка высоты страницы */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+*, 
+*::before, 
+*::after {
+  box-sizing: inherit;
+}
+
+/* 3. Прижимаем футер к низу экрана (Принцип Sticky Footer) */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto; /* Позволяет контенту занимать все свободное место между хедером и футером */
+}
+
+footer {
+  flex-shrink: 0; /* Гарантирует, что футер не сожмется */
+}
+
+/* 4. Сброс стилей для ссылок навигации */
+.nav-link {
+  transition: color 0.25s ease-in-out;
+}
+
+/* 5. Корректировка адаптивной линии для пункта "Компания" */
+@media (max-width: 991.98px) {
+  /* На мобильных устройствах и планшетах убираем нижнюю линию хедера, 
+     чтобы она не перечеркивала текст в открытом бургер-меню */
+  .navbar-nav .nav-link {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+/* 6. Глобальные стили для адаптивных видео и картинок на лендинге */
+img, 
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Адаптивное увеличение логотипа для планшетов и ПК */
+@media (min-width: 992px) {
+  .logo-adaptive {
+    height: 45px !important; /* На ПК логотип будет аккуратным, но чуть крупнее мобильного */
+  }
+}
+@media (max-width: 992px) {
+ body{
+  padding-top: 45px;
+ }
+}
+
+/* Базовые стили для мобильной версии блока */
+.small-btn-adaptive {
+  width: 100%; /* На мобильном кнопка во всю ширину блока */
+  text-align: center;
+}
+
+.text-about-adaptive {
+  font-size: 15px !important; /* На мобильном делаем текст чуть компактнее */
+  text-align: left !important; /* Убираем justify для мобилок, чтобы не было огромных дыр между словами */
+  line-height: 1.5;
+}
+
+/* Стили для планшетов (md) и ПК (lg) */
+@media (min-width: 768px) {
+  .small-btn-adaptive {
+    width: auto !important; /* Возвращаем кнопке её естественный размер */
+    display: inline-block;
+  }
+  
+  .text-about-adaptive {
+    font-size: 16px !important; /* Размер для планшетов */
+    text-align: left !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .text-about-adaptive {
+    font-size: 18px !important; /* Полный размер текста для ПК */
+    text-align: justify !important; /* Включаем выравнивание по ширине как на макете */
+  }
+}
