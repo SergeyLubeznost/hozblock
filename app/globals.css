@@ -46,6 +46,7 @@ footer {
     margin-bottom: 0 !important;
     padding-bottom: 8px !important;
   }
+  
 }
 
 /* 6. Глобальные стили для адаптивных видео и картинок на лендинге */
@@ -97,5 +98,107 @@ video {
   .text-about-adaptive {
     font-size: 18px !important; /* Полный размер текста для ПК */
     text-align: justify !important; /* Включаем выравнивание по ширине как на макете */
+  }
+}
+
+/* Настройки контейнера картинок для предложений */
+.offer-img-wrapper {
+  position: relative;
+  width: 100%;
+  /* Фиксированное соотношение сторон 4:3, чтобы разные картинки не плясали по высоте */
+  aspect-ratio: 4 / 3; 
+}
+
+.offer-img {
+  object-fit: cover;
+  transition: transform 0.4s ease; /* Плавный ховер-эффект */
+}
+
+/* Слегка увеличиваем изображение при наведении мыши */
+.offer-card:hover .offer-img {
+  transform: scale(1.03);
+}
+
+/* Специфичное выравнивание для планшетной версии (md) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* Чтобы на планшете две карточки стояли в ряд, а третья красиво центрировалась снизу */
+  .offer-card {
+    max-width: 100%;
+  }
+}
+/* Настройки контейнера картинок для предложений */
+.offer-img-wrapper {
+  position: relative;
+  width: 100%;
+  /* Фиксированное соотношение сторон 4:3, чтобы разные картинки не плясали по высоте */
+  aspect-ratio: 4 / 3; 
+}
+
+.offer-img {
+  object-fit: cover;
+  transition: transform 0.4s ease; /* Плавный ховер-эффект */
+}
+
+/* Слегка увеличиваем изображение при наведении мыши */
+.offer-card:hover .offer-img {
+  transform: scale(1.03);
+}
+
+/* Специфичное выравнивание для планшетной версии (md) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* Чтобы на планшете две карточки стояли в ряд, а третья красиво центрировалась снизу */
+  .offer-card {
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   БЛОК КАТАЛОГА (CATALOG) - ИСПРАВЛЕННЫЙ ВАРИАНТ СТРЕЛОК
+   ========================================================================== */
+
+/* Пропорции картинки для карточки каталога */
+.catalog-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.5 / 1; 
+}
+
+/* Эффект нажатия на неподвижные стрелочки */
+.catalog-nav-btn:active {
+  opacity: 0.4;
+}
+
+/* 🌟 ИСПРАВЛЕНИЕ ПОЗИЦИИ: Точечное выравнивание стрелок относительно заголовка */
+.catalog-arrows-container {
+  /* margin-bottom рассчитывает высоту: опускаем стрелки ровно под картинку 
+     в одну линию со строкой заголовка на ПК */
+  margin-bottom: -71%; 
+}
+
+/* Адаптивное смещение для планшетов (md) */
+@media (max-width: 991.98px) {
+  .catalog-arrows-container {
+    margin-bottom: -71%;
+  }
+}
+
+/* Адаптивное смещение для мобильных телефонов (xs/sm) */
+@media (max-width: 767.98px) {
+  .catalog-arrows-container {
+    /* На телефонах заголовок переносится на две строки, 
+       поэтому немного корректируем высоту прижатия */
+    margin-bottom: -75%;
+    right: 15px !important;
+  }
+}
+
+/* Тонкая настройка полей спецификации для мобильных экранов */
+@media (max-width: 575.98px) {
+  .catalog-specs-list .d-flex {
+    gap: 2px;
+  }
+  .catalog-specs-list span[style*="min-width"] {
+    min-width: 100% !important; 
+    margin-bottom: 1px;
   }
 }
