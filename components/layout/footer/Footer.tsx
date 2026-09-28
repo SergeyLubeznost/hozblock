@@ -113,7 +113,7 @@ export function Footer() {
               </span>
               {/* Ряд иконок */}
               <div className="d-flex gap-2 justify-content-start justify-content-md-end">
-                <a href="https://wa.me" target="_blank" rel="noreferrer">
+                <a href="https://max.ru/join/gUdHBamcP7UxtDw0mSpk6c3LiWMQ9glU30EJ_GMTvg0" target="_blank" rel="noreferrer">
                   <img
                     src="/Maxlogo.svg"
                     alt="Max"

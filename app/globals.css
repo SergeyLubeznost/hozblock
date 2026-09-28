@@ -202,3 +202,284 @@ video {
     margin-bottom: 1px;
   }
 }
+/* ==========================================================================
+   БЛОК СЕТКИ КАТАЛОГА (CATALOG GRID)
+   ========================================================================== */
+
+.catalog-grid-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.4 / 1; /* Сохраняет единую альбомную пропорцию фото */
+}
+
+.catalog-grid-img {
+  transition: transform 0.3s ease;
+}
+
+.catalog-grid-card:hover .catalog-grid-img {
+  transform: scale(1.02);
+}
+
+/* Стилизация текста и кнопок под разные экраны */
+.catalog-grid-title {
+  font-size: 15px;
+}
+
+.catalog-grid-price-value {
+  font-size: 16px;
+}
+
+/* Кастомные эффекты нажатия на оранжевые кнопки витрины */
+.catalog-grid-btn:active,
+.catalog-more-btn:active {
+  opacity: 0.8 !important;
+  background-color: #bd6a01 !important;
+}
+
+/* Точечная адаптивная подгонка под мобильные телефоны (xs) */
+@media (max-width: 575.98px) {
+  .catalog-grid-title {
+    font-size: 11px !important; /* Уменьшаем шрифт, чтобы длинный текст помещался в 2 колонки */
+  }
+  
+  .catalog-grid-price-label,
+  .catalog-grid-price-value {
+    font-size: 12px !important;
+  }
+  
+  .catalog-grid-btn {
+    font-size: 11px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+}
+/* ==========================================================================
+   БЛОК ЭТАПОВ РЕАЛИЗАЦИИ (STEPS TIMELINE) - ИСПРАВЛЕНО
+   ========================================================================== */
+
+/* Общие стили круглых числовых маркеров */
+.step-number-circle {
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid #DA8402;
+  border-radius: 50%;
+  color: #DA8402;
+  background-color: #ffffff;
+  font-size: 16px;
+}
+
+/* Оранжевая соединительная линия для мобильной матрицы (строго между парами колонок) */
+.step-mobile-connector {
+  position: absolute;
+  height: 2px;
+  background-color: #DA8402;
+  /* Направляем линию ровно от центра первой колонки до центра второй */
+  left: 50%;
+  width: 100%;
+  top: 21px; /* Ровно по центру кружка высотой 42px */
+  z-index: 0;
+}
+
+/* Корректировка, чтобы на планшетах текст не слипался */
+@media (max-width: 991.98px) {
+  .step-number-circle {
+    position: relative;
+    z-index: 2; /* Поднимаем кружки над линией-коннектором */
+  }
+}
+
+/* ==========================================================================
+/* ==========================================================================
+   БЛОК ОТЗЫВОВ (REVIEWS SLIDER) - ИСПРАВЛЕННЫЙ ВАРИАНТ
+   ========================================================================== */
+
+/* Ограничиваем максимальную ширину самого слайдера */
+.reviews-slider-wrapper {
+  max-width: 960px;
+  width: 100%;
+}
+
+/* 🌟 УСТРАНЕНИЕ РАСТЯГИВАНИЯ: Жесткие размеры контейнера под мобильный скриншот */
+.review-card-wrapper {
+  width: 100%;
+  max-width: 280px; /* Идеальная компактная ширина смартфона на ПК и планшетах */
+  aspect-ratio: 9 / 19.5; /* Точное соотношение современных экранов мобильных */
+  background-color: #000000; /* Черный фон закроет пустоты, если картинка неидеальна */
+}
+
+/* Корректное заполнение картинкой пространства */
+.review-screenshot-img {
+  object-fit: contain; /* Картинка полностью поместится внутрь без искажений и растягивания */
+  background-color: #000000;
+}
+
+/* 🌟 УВЕЛИЧЕНИЕ СТРЕЛОК НАВИГАЦИИ */
+.reviews-arrow-btn {
+  font-size: 5rem !important; /* Делаем стрелочки крупными и заметными, как на макете */
+  color: #DA8402 !important;
+  font-weight: 300;
+  line-height: 1;
+  padding: 0 10px !important;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.reviews-arrow-btn:hover {
+  transform: translateY(-50%) scale(1.1); /* Легкое увеличение при наведении */
+}
+
+.reviews-arrow-btn:active {
+  opacity: 0.5;
+}
+
+/* Кастомные индикаторы-точки */
+.reviews-custom-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #e0e0e0 !important;
+  opacity: 1;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.reviews-custom-pagination .swiper-pagination-bullet-active {
+  background-color: #DA8402 !important;
+}
+
+/* Корректировка для мобильной версии */
+@media (max-width: 575.98px) {
+  .review-card-wrapper {
+    max-width: 250px; /* На маленьких телефонах делаем карточку еще чуть компактнее */
+  }
+}
+/* ==========================================================================
+   БЛОК ВОПРОС-ОТВЕТ (FAQ ACCORDION) — ИСПРАВЛЕННЫЕ СВЕТЛЫЕ ЦВЕТА
+   ========================================================================== */
+
+/* Контейнер всей карточки вопроса */
+.faq-item-wrapper {
+  background-color: #f8f9fa; /* Мягкий светло-серый фон для раскрытой карточки */
+  border: 1px solid #e9ecef;
+  transition: background-color 0.3s ease;
+}
+
+/* Стили заголовка-кнопки */
+.faq-trigger-header {
+  background-color: #f8f9fa; /* В закрытом состоянии плашка аккуратного светлого цвета */
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+/* Легкий эффект наведения на вопрос */
+.faq-trigger-header:hover {
+  background-color: #e9ecef;
+}
+
+/* Перекрашиваем текст вопроса в глубокий графитовый цвет вместо белого */
+.faq-trigger-header span:first-child {
+  color: #212529 !important;
+}
+
+/* Фирменная оранжевая стрелочка-галочка */
+.faq-arrow {
+  color: #DA8402; /* Наш точный оранжевый цвет */
+  font-size: 14px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+/* Тело ответа */
+.faq-body-content {
+  background-color: #ffffff; /* Сам ответ открывается на чистом белом фоне */
+  border-top: 1px solid #e9ecef; /* Тонкая разделительная черта внутри */
+}
+
+/* Перекрашиваем текст ответов и списков в читаемый темный цвет */
+.faq-body-content,
+.faq-body-content p,
+.faq-body-content ul {
+  color: #495057 !important;
+}
+
+/* Выделенные подзаголовки внутри ответов делаем акцентными */
+.faq-body-content .text-white {
+  color: #212529 !important;
+}
+
+/* Смягчаем второстепенный текст */
+.faq-body-content .text-white-50 {
+  color: #495057 !important;
+}
+
+/* Сброс базовых стилей списков внутри вкладок */
+.faq-body-content ul li {
+  margin-bottom: 6px;
+  position: relative;
+}
+
+/* Адаптивность шрифтов под экраны смартфонов */
+@media (max-width: 575.98px) {
+  .faq-trigger-header {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  .faq-trigger-header span:first-child {
+    font-size: 14px !important;
+  }
+  
+  .faq-body-content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    font-size: 13px !important;
+  }
+}
+/* ==========================================================================
+   БЛОК ФОРМЫ ОБРАТНОЙ СВЯЗИ (CONTACTS)
+   ========================================================================== */
+
+/* Стилизация инпутов по форме макета */
+.contact-input-field {
+  border: 1px solid #ced4da !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  color: #212529 !important;
+}
+
+.contact-input-field:focus {
+  border-color: #DA8402 !important;
+  box-shadow: 0 0 0 0.2rem rgba(218, 132, 2, 0.15) !important;
+}
+
+/* Эффект клика по оранжевой кнопке формы */
+.contact-submit-btn:active {
+  opacity: 0.8 !important;
+  background-color: #bd6a01 !important;
+}
+
+/* Корректировка выравнивания иконок и текстов на мобильных разрешениях */
+@media (max-width: 767.98px) {
+  .contact-icon-text {
+    font-size: 11px !important; /* Немного уменьшаем шрифт, чтобы в режиме 2х2 текст не ломался */
+  }
+  
+  .contact-icon-text span {
+    font-size: 13px !important;
+  }
+}
+/* Жестко фиксируем область иконки, исключая деформацию картинок */
+.contact-icon-fixed {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767.98px) {
+  /* Задаем максимальную ширину боксу контента на мобилке.
+     Это позволит левым краям иконок в столбцах 1 и 2 встать строго по одной вертикальной нитке */
+  .contact-item-box {
+    width: 100%;
+    max-width: 155px; /* Оптимальный размер, чтобы длинная почта не урезалась */
+    font-size: 11px !important;
+  }
+}
