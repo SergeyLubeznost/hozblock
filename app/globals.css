@@ -16,7 +16,13 @@ body {
 *::after {
   box-sizing: inherit;
 }
-
+html {
+  scroll-behavior: smooth;
+  
+  /* Укажите здесь высоту вашей шапки + небольшой запас (например, 20-30px) */
+  /* Если высота шапки около 70px, то 100px — идеальный вариант */
+  scroll-padding-top: 50px; 
+}
 /* 3. Прижимаем футер к низу экрана (Принцип Sticky Footer) */
 body {
   display: flex;

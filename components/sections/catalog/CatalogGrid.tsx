@@ -5,96 +5,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
-// 1. Используем предоставленные вами интерфейсы для строгой типизации
-interface ProjectSpec {
-  label: string;
-  value: string;
-}
-
-interface ProjectCard {
-  id: number;
-  img: string;
-  title: string;
-  subtitle: string;
-  specs: ProjectSpec[];
-  price?: number; // Добавили необязательное поле цены для отображения на витрине
-}
-
-// Вспомогательный массив базовых спецификаций, чтобы не раздувать код дублированием
-const defaultSpecs: ProjectSpec[] = [
-  {
-    label: "Основание пола",
-    value: "брус 100х150мм естественной влажности сорт 1",
-  },
-  {
-    label: "Лаги пола",
-    value: "доска 40х100мм с шагом 600мм естественной влажности сорт 1",
-  },
-  {
-    label: "Черновой пол",
-    value: "доска 25х150мм естественной влажности сорт 2",
-  },
-  {
-    label: "Чистовой пол",
-    value: "доска 25х150мм естественной влажности сорт 2",
-  },
-  { label: "Каркас стен", value: "брус 50х50мм естественной влажности сорт 2" },
-  { label: "Наружная отделка", value: "вагонка сорт С" },
-  {
-    label: "Утепление",
-    value: "50мм каменной ватой Роквул + ветрозащита + пароизоляция",
-  },
-  { label: "Внутренняя отделка", value: "вагонка сорта С" },
-  {
-    label: "Окно",
-    value:
-      "800х800мм деревянное открывающееся, 1шт. в душе и форточка 400х500мм в туалете, 1шт.",
-  },
-  {
-    label: "Двери",
-    value:
-      "деревянные каркасные, обшиты вагонкой, с проушинами под навесной замок",
-  },
-  { label: "Стропила", value: "доска 40х100мм с шагом 600мм сорт 1" },
-  { label: "Обрешетка кровли", value: "доска 25х150мм сорт 2" },
-  { label: "Кровельное покрытие", value: "ондулин" },
-  { label: "Свесы кровли", value: "по 10см с каждой стороны" },
-];
-
-// 2. Генерируем массив из 16 элементов, дублируя описание и распределяя заголовки/картинки
-const catalogProjects: ProjectCard[] = Array.from(
-  { length: 16 },
-  (_, index) => {
-    const baseId = (index % 4) + 1;
-    let img = "/hozblockobj_11zon.webp";
-    let title = "Скандинавский уют";
-    let subtitle = "для любителей минимализма.";
-
-    if (baseId === 2) {
-      img = "/navecobj_11zon.webp";
-      title = "Премиум-защита";
-      subtitle = "акцент на надежности для авто.";
-    } else if (baseId === 3) {
-      img = "/becedkaobj_11zon.webp";
-      title = "Терраса Loft";
-      subtitle = "подчеркивает современный деревянный стиль.";
-    } else if (baseId === 4) {
-      img = "/minidomobj_11zon.webp";
-      title = "Архитектура будущего";
-      subtitle = "фокус на беседке и стильной плоской кровле.";
-    }
-
-    return {
-      id: index + 1,
-      img,
-      title,
-      subtitle,
-      specs: defaultSpecs,
-      price: 96000, // Базовая цена из вашего макета
-    };
-  },
-);
+import Link from "next/link";
+import { ProjectSpec } from "@/components/data/data";
+import { ProjectCard } from "@/components/data/data";
+import { catalogProjects } from "@/components/data/data";
 
 export function CatalogGrid(): React.ReactNode {
   // На ПК по умолчанию показываем 6, на мобильных/планшетах — 4.
@@ -123,11 +37,13 @@ export function CatalogGrid(): React.ReactNode {
                 <div className="catalog-grid-card h-100 d-flex flex-column bg-white text-center">
                   {/* Обертка картинки товара */}
                   <div className="catalog-grid-img-wrapper mb-2 overflow-hidden rounded">
-                    <img
-                      src={project.img}
-                      alt={project.title}
-                      className="img-fluid w-100 h-100 object-cover catalog-grid-img"
-                    />
+                    <Link href={`/catalog/${project.id}`}>
+                      <img
+                        src={project.img}
+                        alt={project.title}
+                        className="img-fluid w-100 h-100 object-cover catalog-grid-img"
+                      />
+                    </Link>
                   </div>
 
                   {/* Текстовое описание товара */}
@@ -148,17 +64,18 @@ export function CatalogGrid(): React.ReactNode {
                     </div>
 
                     {/* Оранжевая кнопка "Подробнее" */}
-                    <Button
-                      href={`#project-${project.id}`}
-                      className="w-100 border-0 fw-medium py-1 py-md-2 mt-auto text-white catalog-grid-btn"
-                      style={{
-                        backgroundColor: "#DA8402",
-                        borderRadius: "20px", // Закругленная кнопка по форме макета
-                        fontSize: "13px",
-                      }}
-                    >
-                      Подробнее
-                    </Button>
+                    <Link href={`/catalog/${project.id}`}>
+                      <Button
+                        className="w-100 border-0 fw-medium py-1 py-md-2 mt-auto text-white catalog-grid-btn"
+                        style={{
+                          backgroundColor: "#DA8402",
+                          borderRadius: "20px", // Закругленная кнопка по форме макета
+                          fontSize: "13px",
+                        }}
+                      >
+                        Подробнее
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </Col>
