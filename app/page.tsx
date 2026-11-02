@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero/Hero";
 import { About } from "@/components/sections/about/About";
+import { Stories } from "@/components/sections/stories/Stories"
 import { Offers } from "@/components/sections/offers/Offers";
 import { Objects } from "@/components/sections/objects/Objects";
 import { CatalogSwiper } from "@/components/sections/sliderCatalog/sliderCatalog";
@@ -15,6 +16,7 @@ export default function Home() {
     <main>
       <Hero />
       <About />
+      <Stories />
       <Offers />
       <Objects />
       <CatalogSwiper />

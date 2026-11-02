@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -25,31 +26,36 @@ export function Footer() {
             {/* Вертикальное меню, как на макетах */}
             <Nav className="flex-column align-items-start">
               <NavLink
-                href="#company"
+               as={Link}
+                href="/#company"
                 className="fw-medium text-dark ps-0 py-1"
               >
                 Компания
               </NavLink>
               <NavLink
-                href="#services"
+               as={Link}
+                href="/#services"
                 className="fw-medium text-dark ps-0 py-1"
               >
                 Услуги
               </NavLink>
               <NavLink
-                href="#objects"
+               as={Link}
+                href="/#objects"
                 className="fw-medium text-dark ps-0 py-1"
               >
                 Объекты
               </NavLink>
               <NavLink
-                href="#reviews"
+               as={Link}
+                href="/#reviews"
                 className="fw-medium text-dark ps-0 py-1"
               >
                 Отзывы
               </NavLink>
               <NavLink
-                href="#callback"
+               as={Link}
+                href="/#callback"
                 className="fw-medium text-dark ps-0 py-1"
               >
                 Оставить заявку

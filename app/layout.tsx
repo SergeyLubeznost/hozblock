@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header/Header";
 import { Footer } from "@/components/layout/footer/Footer";
-import JivoChatWidget from "@/components/JivoChatWidget"; // Импортируем новый клиентский компонент
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -42,7 +41,9 @@ export default function RootLayout({
         <Footer />
 
         {/* Безопасное подключение чата Jivo через изолированный клиентский компонент */}
-        <JivoChatWidget />
+      
+        <script src="//code.jivosite.com/widget/3sk5R8iVYJ" async></script>
+
       </body>
     </html>
   );
