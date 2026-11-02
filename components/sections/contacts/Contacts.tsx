@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -15,33 +16,94 @@ interface FormData {
 }
 
 export function Contacts(): React.ReactNode {
-  // Инициализируем типизированный стейт формы
+  interface FormData {
+    name: string;
+    email: string;
+    phone: string;
+    agree: boolean;
+    security_honey: string;
+  }
+
+  interface FormErrors {
+    name?: string;
+    email?: string;
+    phone?: string;
+    agree?: string;
+  }
+
+  // Внутри компонента Contacts():
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
+    agree: false,
+    security_honey: "",
   });
-
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  // Обработчик изменения значений в полях ввода
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const formatPhoneNumber = (value: string): string => {
+    const digits = value.replace(/\D/g, "");
+    if (!digits.length) return "";
+    let cleaned = digits;
+    if (cleaned === "7" || cleaned === "8") cleaned = cleaned.substring(1);
+
+    let result = "+7 ";
+    if (cleaned.length > 0) result += `(${cleaned.substring(0, 3)}`;
+    if (cleaned.length >= 4) result += `) ${cleaned.substring(3, 6)}`;
+    if (cleaned.length >= 7) result += `-${cleaned.substring(6, 8)}`;
+    if (cleaned.length >= 9) result += `-${cleaned.substring(8, 11)}`;
+    return result;
   };
 
-  // Обработчик отправки формы
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    } else if (name === "phone") {
+      setFormData((prev) => ({ ...prev, phone: formatPhoneNumber(value) }));
+      setErrors((prev) => ({ ...prev, phone: undefined }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    if (formData.security_honey !== "") return; // Блокировка роботов
 
-    // В будущем здесь будет отправка через fetch() на ваш PHP-скрипт на Спринтхосте
-    console.log("Данные формы для отправки на PHP:", formData);
+    const newErrors: FormErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Введите ваше имя";
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      newErrors.email = "Введите корректный email";
+    }
+
+    if (formData.phone.length < 18) {
+      newErrors.phone = "Введите полный номер телефона";
+    }
+
+    if (!formData.agree) {
+      newErrors.agree = "Необходимо согласие на обработку данных";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     setIsSubmitted(true);
-    setFormData({ name: "", email: "", phone: "" }); // Очищаем поля после отправки
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      agree: false,
+      security_honey: "",
+    });
   };
 
   return (
@@ -60,9 +122,12 @@ export function Contacts(): React.ReactNode {
             md={3} — на планшетах и ПК выстраивает все 4 элемента в одну линию (как на макетах 1 и 2) 
             Изменено: d-flex у Col контролирует центрирование боксов на мобильных устройствах */}
         <Row className="gy-4 gx-2 justify-content-center mb-5 align-items-start px-2">
-          
           {/* Телефон */}
-          <Col xs={6} md={3} className="d-flex justify-content-start justify-content-md-center">
+          <Col
+            xs={6}
+            md={3}
+            className="d-flex justify-content-start justify-content-md-center"
+          >
             <div className="contact-item-box d-flex align-items-center gap-2">
               <div className="contact-icon-fixed d-flex align-items-center justify-content-center">
                 <img src="/Phone.svg" alt="Телефон" width="24" height="24" />
@@ -77,7 +142,11 @@ export function Contacts(): React.ReactNode {
           </Col>
 
           {/* Адрес */}
-          <Col xs={6} md={3} className="d-flex justify-content-start justify-content-md-center">
+          <Col
+            xs={6}
+            md={3}
+            className="d-flex justify-content-start justify-content-md-center"
+          >
             <div className="contact-item-box d-flex align-items-start gap-2">
               <div className="contact-icon-fixed d-flex align-items-center justify-content-center pt-1">
                 <img src="/place.svg" alt="Адрес" width="20" height="20" />
@@ -88,7 +157,10 @@ export function Contacts(): React.ReactNode {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span className="text-dark lh-sm d-block" style={{ fontSize: "12px" }}>
+                <span
+                  className="text-dark lh-sm d-block"
+                  style={{ fontSize: "12px" }}
+                >
                   ЛО, Всеволожский р-н,
                   <br />
                   д. Вартемяги, Приозерское ш. 115
@@ -98,7 +170,11 @@ export function Contacts(): React.ReactNode {
           </Col>
 
           {/* Почта */}
-          <Col xs={6} md={3} className="d-flex justify-content-start justify-content-md-center">
+          <Col
+            xs={6}
+            md={3}
+            className="d-flex justify-content-start justify-content-md-center"
+          >
             <div className="contact-item-box d-flex align-items-center gap-2">
               <div className="contact-icon-fixed d-flex align-items-center justify-content-center">
                 <img src="/At.svg" alt="Почта" width="24" height="24" />
@@ -113,7 +189,11 @@ export function Contacts(): React.ReactNode {
           </Col>
 
           {/* Ссылка на Max */}
-          <Col xs={6} md={3} className="d-flex justify-content-start justify-content-md-center">
+          <Col
+            xs={6}
+            md={3}
+            className="d-flex justify-content-start justify-content-md-center"
+          >
             <div className="contact-item-box d-flex align-items-center gap-2">
               <div className="contact-icon-fixed d-flex align-items-center justify-content-center">
                 <img src="/Maxlogo.svg" alt="Max" width="24" height="24" />
@@ -128,10 +208,10 @@ export function Contacts(): React.ReactNode {
               </a>
             </div>
           </Col>
-          
         </Row>
 
         {/* 2. БЛОК С ФОРМОЙ ОБРАТНОЙ СВЯЗИ */}
+        {/* 2. БЛОК С ФОРМОЙ ОБРАТНОЙ СВЯЗИ С ВАЛИДАЦИЕЙ И МАСКОЙ */}
         <div className="mx-auto" style={{ maxWidth: "580px" }}>
           <div className="bg-white border rounded p-4 p-sm-5 shadow-sm">
             {isSubmitted ? (
@@ -156,7 +236,18 @@ export function Contacts(): React.ReactNode {
               <Form
                 onSubmit={handleSubmit}
                 className="d-flex flex-column gap-3"
+                noValidate
               >
+                {/* Скрытое поле-ловушка Honeypot для автоматических ботов */}
+                <input
+                  type="text"
+                  name="security_honey"
+                  value={formData.security_honey || ""}
+                  onChange={handleChange}
+                  style={{ display: "none" }}
+                  autoComplete="off"
+                />
+
                 {/* Поле: Имя */}
                 <Form.Group controlId="formName">
                   <Form.Control
@@ -166,8 +257,12 @@ export function Contacts(): React.ReactNode {
                     onChange={handleChange}
                     placeholder="Введите ваше имя"
                     required
+                    isInvalid={!!errors.name}
                     className="py-2 px-3 contact-input-field"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 {/* Поле: Почта */}
@@ -179,11 +274,15 @@ export function Contacts(): React.ReactNode {
                     onChange={handleChange}
                     placeholder="Введите вашу почту"
                     required
+                    isInvalid={!!errors.email}
                     className="py-2 px-3 contact-input-field"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
-                {/* Поле: Телефон */}
+                {/* Поле: Телефон с маской */}
                 <Form.Group controlId="formPhone">
                   <Form.Control
                     type="tel"
@@ -192,7 +291,40 @@ export function Contacts(): React.ReactNode {
                     onChange={handleChange}
                     placeholder="+7 (___) ___-__-__"
                     required
+                    isInvalid={!!errors.phone}
                     className="py-2 px-3 contact-input-field"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.phone}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                {/* Чекбокс согласия */}
+                <Form.Group controlId="formAgree">
+                  <Form.Check
+                    type="checkbox"
+                    name="agree"
+                    checked={formData.agree || false}
+                    onChange={handleChange}
+                    isInvalid={!!errors.agree}
+                    label={
+                      <span
+                        className="text-muted"
+                        style={{ fontSize: "11px", lineHeight: "1.3" }}
+                      >
+                        Я согласен с обработкой моих персональных данных в
+                        соответствии с{" "}
+                        <Link
+                          href="/privacy"
+                          target="_blank"
+                          className="text-decoration-underline text-dark fw-medium"
+                        >
+                          политикой конфиденциальности
+                        </Link>
+                      </span>
+                    }
+                    feedback={errors.agree}
+                    feedbackType="invalid"
                   />
                 </Form.Group>
 

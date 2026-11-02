@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// 1. Импортируем Хедер и Футер из папки components
 import { Header } from "@/components/layout/header/Header";
 import { Footer } from "@/components/layout/footer/Footer";
+import JivoChatWidget from "@/components/JivoChatWidget"; // Импортируем новый клиентский компонент
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -22,19 +22,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className="h-full" suppressHydrationWarning>
+    <html
+      lang="ru"
+      className="h-full"
+      data-scroll-behavior="smooth" // <-- ДОБАВЛЕНО СЮДА (убирает предупреждение Next.js)
+      suppressHydrationWarning
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-full flex flex-col antialiased`}
-        suppressHydrationWarning // <-- Добавьте это сюда
+        suppressHydrationWarning
       >
-        {/* 2. Вставляем Хедер наверх */}
+        {/* Вставляем Хедер наверх */}
         <Header />
 
         {/* Стили Bootstrap flex-grow-1 заставят прижать футер к низу, если контента мало */}
         <div className="flex-grow-1">{children}</div>
 
-        {/* 3. Вставляем Футер вниз */}
+        {/* Вставляем Футер вниз */}
         <Footer />
+
+        {/* Безопасное подключение чата Jivo через изолированный клиентский компонент */}
+        <JivoChatWidget />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import Link from "next/link";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -314,12 +315,13 @@ export default function OrderModal({
                       >
                         Я согласен с обработкой моих персональных данных в
                         соответствии с{" "}
-                        <a
-                          href="#"
+                        <Link
+                          href="/privacy"
+                          target="_blank"
                           className="text-decoration-underline text-dark fw-medium"
                         >
                           политикой конфиденциальности
-                        </a>
+                        </Link>
                       </span>
                     }
                     feedback={errors.agree}
