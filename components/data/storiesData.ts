@@ -8,26 +8,26 @@ export interface StoryItem {
 export const storiesData: StoryItem[] = [
   {
     id: 1,
-    title: 'Наше производство',
-    previewImg: 'https://unsplash.com',
+    title: 'Интерактив: угадай материал',
+    previewImg: '/image (1)_11zon.webp', // Скриншот с автомобилем и навесом
     videoUrl: 'https://googleapis.com'
   },
   {
     id: 2,
-    title: 'Обзор хозблока',
-    previewImg: 'https://unsplash.com',
+    title: 'Монтаж навеса для авто',
+    previewImg: '/image_11zon.webp', // Скриншот с большим коричневым навесом
     videoUrl: 'https://googleapis.com'
   },
   {
     id: 3,
-    title: 'Монтаж навеса',
-    previewImg: 'https://unsplash.com',
+    title: 'Кровельные работы на объекте',
+    previewImg: '/image (2).jpg', // Скриншот с обзором кровли специалистом
     videoUrl: 'https://googleapis.com'
   },
   {
     id: 4,
-    title: 'Отзыв клиента',
-    previewImg: 'https://unsplash.com',
+    title: 'Разбор видов крыш',
+    previewImg: '/image (3)_11zon.webp', // Этот новый скриншот с многоскатной крышей
     videoUrl: 'https://googleapis.com'
   }
 ];
